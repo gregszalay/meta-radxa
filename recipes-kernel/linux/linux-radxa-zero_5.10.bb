@@ -6,7 +6,7 @@ inherit kernel
 require recipes-kernel/linux/linux-yocto.inc
 
 SRC_URI = " \
-	git://github.com/radxa/kernel.git;branch=linux-5.10.y-radxa-zero; \
+	git://github.com/radxa/kernel.git;branch=linux-5.10.y-radxa-zero;protocol=https; \
 "
 
 SRCREV = "57a25a2f2f476f98a9a98115853b29f10b086f77"
@@ -25,16 +25,16 @@ KCONFIG_MODE = "--alldefconfig"
 # We need mkimage for the overlays
 DEPENDS += "u-boot-mkimage-radxa-native"
 
-do_compile_append() {
+do_compile:append() {
 	oe_runmake dtbs
 }
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}/boot/overlays
 	install -m 644 ${B}/arch/arm64/boot/dts/amlogic/overlay/* ${D}/boot/overlays
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	install -d ${DEPLOYDIR}/overlays
 	install -m 644 ${B}/arch/arm64/boot/dts/amlogic/overlay/* ${DEPLOYDIR}/overlays
 }

@@ -5,10 +5,12 @@ SECTION = "libs"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=91e7de50a8d3cf01057f318d72460acd"
 
-SRCREV = "06b2be27c77abf5b5b7af4644151049d60e54053"
+SRCREV = "fc8c9061a6ee73e9910749a51a12424f7cb21c08"
 PV = "2.1.0+git${SRCPV}"
 
-SRC_URI = "git://github.com/radxa/mraa.git;protocol=http \
+SRC_URI = "git://github.com/radxa/mraa.git;protocol=https;branch=master; \
+           file://0004-fix-version-already-defined.patch \
+	   file://0005-mraa-extended-radxa-cm3-functionality.patch \
            "
 
 S = "${WORKDIR}/git"
@@ -16,11 +18,11 @@ S = "${WORKDIR}/git"
 # CMakeLists.txt checks the architecture, only x86 and ARM supported for now
 COMPATIBLE_HOST = "(x86_64.*|i.86.*|aarch64.*|arm.*)-linux"
 
-inherit cmake distutils3-base
+inherit cmake setuptools3-base
 
 DEPENDS += "json-c"
 
-EXTRA_OECMAKE_append = " -DINSTALLTOOLS:BOOL=ON -DFIRMATA=ON -DCMAKE_SKIP_RPATH=ON \
+EXTRA_OECMAKE:append = " -DINSTALLTOOLS:BOOL=ON -DFIRMATA=ON -DCMAKE_SKIP_RPATH=ON \
                          -DPYTHON3_PACKAGES_PATH:PATH=${baselib}/python${PYTHON_BASEVERSION}/site-packages \
 			 -DBUILDSWIGNODE=OFF \
                        "
@@ -28,9 +30,9 @@ EXTRA_OECMAKE_append = " -DINSTALLTOOLS:BOOL=ON -DFIRMATA=ON -DCMAKE_SKIP_RPATH=
 # Prepend mraa-utils to make sure bindir ends up in there
 PACKAGES =+ "${PN}-utils"
 
-FILES_${PN}-doc += "${datadir}/mraa/examples/"
+FILES:${PN}-doc += "${datadir}/mraa/examples/"
 
-FILES_${PN}-utils = "${bindir}/"
+FILES:${PN}-utils = "${bindir}/"
 
 PACKAGECONFIG ??= "python"
 

@@ -8,7 +8,7 @@ DEPENDS += "openssl-native u-boot-mkimage-radxa-native"
 do_compile[depends] += "u-boot-mkimage-radxa-native:do_populate_sysroot"
 
 SRC_URI = " \
-	git://github.com/radxa/kernel.git;branch=stable-4.4-rockpie; \
+	git://github.com/radxa/kernel.git;branch=stable-4.4-rockpie;protocol=https; \
 "
 
 SRCREV = "615ae743115011bbe1cd1edc5c9118bf95527f54"
@@ -24,11 +24,11 @@ PV = "${LINUX_VERSION}"
 COMPATIBLE_MACHINE = "(rk3036|rk3066|rk3288|rk3328|rk3399|rk3308)"
 deltask kernel_configme
 
-do_compile_append() {
+do_compile:append() {
 	oe_runmake dtbs
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	install -d ${DEPLOYDIR}/overlays
 	install -m 644 ${WORKDIR}/linux-rockpi_e_rk3328-standard-build/arch/arm64/boot/dts/rockchip/overlay/* ${DEPLOYDIR}/overlays
 }

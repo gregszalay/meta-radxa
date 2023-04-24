@@ -11,7 +11,7 @@ DEPENDS += "openssl-native u-boot-mkimage-radxa-native"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 SRC_URI = " \
-	git://github.com/radxa/kernel.git;branch=stable-4.19-rock3; \
+	git://github.com/radxa/kernel.git;branch=stable-4.19-rock3;protocol=https; \
 	file://0003-enable-rock-3a-console-debug.patch\
 "
 
@@ -28,16 +28,16 @@ PV = "${LINUX_VERSION}"
 COMPATIBLE_MACHINE = "(rk3568)"
 deltask kernel_configme
 # Make sure we use /usr/bin/env ${PYTHON_PN} for scripts
-do_patch_append() {
+do_patch:append() {
 	for s in `grep -rIl python ${S}/scripts`; do
 		sed -i -e '1s|^#!.*python[23]*|#!/usr/bin/env ${PYTHON_PN}|' $s
 	done
 }
 
-do_compile_append() {
+do_compile:append() {
 	oe_runmake dtbs
 }
-do_deploy_append() {
+do_deploy:append() {
 	install -d ${DEPLOYDIR}/overlays
 	install -m 644 ${WORKDIR}/linux-rock_3a_rk3568-standard-build/arch/arm64/boot/dts/rockchip/overlay/* ${DEPLOYDIR}/overlays
 }
