@@ -46,8 +46,8 @@ SRC_URI = " \
 #EXTRA_OEMAKE = "'HOSTCC=${BUILD_CC}'"
 
 # gergely 
-SRCREV = "431859b8e2cfa5a7f243edfa5738d4e2b11f4d27"
-#SRCREV = "${AUTOREV}"
+#SRCREV = "431859b8e2cfa5a7f243edfa5738d4e2b11f4d27"
+SRCREV = "${AUTOREV}"
 #SRCREV = "693c4cd017e57a6af8e471494be5e8780c041b08"
 
 do_compile:append () {
