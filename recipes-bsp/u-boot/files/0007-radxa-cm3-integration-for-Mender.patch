@@ -1,0 +1,79 @@
+diff -Naur a/configs/radxa-cm3-rpi-cm4-io-rk3566_defconfig b/configs/radxa-cm3-rpi-cm4-io-rk3566_defconfig
+--- a/configs/radxa-cm3-rpi-cm4-io-rk3566_defconfig	2022-08-08 19:11:35.053840078 +0200
++++ b/configs/radxa-cm3-rpi-cm4-io-rk3566_defconfig	2022-08-05 14:58:06.121090424 +0200
+@@ -35,7 +35,7 @@
+ CONFIG_ANDROID_BOOT_IMAGE_HASH=y
+ CONFIG_SPL_BOARD_INIT=y
+ # CONFIG_SPL_RAW_IMAGE_SUPPORT is not set
+-# CONFIG_SPL_LEGACY_IMAGE_SUPPORT is not set
++CONFIG_SPL_LEGACY_IMAGE_SUPPORT=y
+ CONFIG_SPL_SEPARATE_BSS=y
+ CONFIG_SPL_SHA256_SUPPORT=y
+ CONFIG_SPL_CRYPTO_SUPPORT=y
+@@ -208,3 +208,4 @@
+ CONFIG_RK_AVB_LIBAVB_USER=y
+ CONFIG_OPTEE_CLIENT=y
+ CONFIG_OPTEE_V2=y
++CONFIG_ENV_IS_IN_MMC=y
+diff -Naur a/env/Kconfig b/env/Kconfig
+--- a/env/Kconfig	2022-08-08 19:11:35.205843006 +0200
++++ b/env/Kconfig	2022-08-04 21:26:03.610889683 +0200
+@@ -471,19 +471,6 @@
+ 
+ if ARCH_ROCKCHIP
+ 
+-config ENV_OFFSET
+-	hex "Environment offset"
+-	depends on !ENV_IS_IN_UBI
+-	depends on !ENV_IS_NOWHERE
+-	default 0x3f8000
+-	help
+-	  Offset from the start of the device (or partition)
+-
+-config ENV_SIZE
+-	hex "Environment size"
+-	default 0x8000
+-	help
+-	  Size of the environment storage area
+ 
+ endif
+ 
+diff -Naur a/include/config_mender_defines.h b/include/config_mender_defines.h
+--- a/include/config_mender_defines.h	2022-08-08 19:11:36.269863505 +0200
++++ b/include/config_mender_defines.h	2022-08-05 18:08:25.124175574 +0200
+@@ -15,11 +15,11 @@
+ #define MENDER_UBOOT_STORAGE_DEVICE 0
+ 
+ /* BB variables. */
+-#define MENDER_STORAGE_DEVICE_BASE "/dev/mmcblk1p"
++#define MENDER_STORAGE_DEVICE_BASE "/dev/mmcblk0p"
+ #define MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET_1 0x400000
+-#define MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET_2 0x800000
++#define MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET_2 0x1000000
+-#define MENDER_ROOTFS_PART_A_NAME "/dev/mmcblk1p2"
+-#define MENDER_ROOTFS_PART_B_NAME "/dev/mmcblk1p3"
++#define MENDER_ROOTFS_PART_A_NAME "/dev/mmcblk0p2"
++#define MENDER_ROOTFS_PART_B_NAME "/dev/mmcblk0p3"
+ 
+ /* For sanity checks. */
+ #define MENDER_BOOTENV_SIZE 0x8000
+diff -Naur a/include/configs/rk3568_common.h b/include/configs/rk3568_common.h
+--- a/include/configs/rk3568_common.h	2022-08-08 19:11:35.245843777 +0200
++++ b/include/configs/rk3568_common.h	2022-08-04 21:27:12.708120044 +0200
+@@ -7,6 +7,8 @@
+ #ifndef __CONFIG_RK3568_COMMON_H
+ #define __CONFIG_RK3568_COMMON_H
+ 
++#define CONFIG_BOOTCOUNT_LIMIT
++#define CONFIG_BOOTCOUNT_ENV
+ #include "rockchip-common.h"
+ 
+ #define CONFIG_SPL_FRAMEWORK
+diff -Naur a/configs/radxa-cm3-io-rk3566_defconfig b/configs/radxa-cm3-io-rk3566_defconfig
+--- a/configs/radxa-cm3-io-rk3566_defconfig     2023-04-17 15:15:18.445984000 +0000
++++ b/configs/radxa-cm3-io-rk3566_defconfig     2023-04-17 15:14:05.125646450 +0000
+@@ -218,3 +218,4 @@
+ CONFIG_RK_AVB_LIBAVB_USER=y
+ CONFIG_OPTEE_CLIENT=y
+ CONFIG_OPTEE_V2=y
++CONFIG_ENV_IS_IN_MMC=y

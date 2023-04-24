@@ -1,4 +1,4 @@
-inherit native deploy
+inherit deploy native
 
 DESCRIPTION = "Rockchip-Radxa binary tools"
 
@@ -6,7 +6,7 @@ LICENSE = "BINARY"
 LIC_FILES_CHKSUM = "file://LICENSE.TXT;md5=564e729dd65db6f65f911ce0cd340cf9"
 NO_GENERIC_LICENSE[BINARY] = "LICENSE.TXT"
 
-SRC_URI = "git://github.com/radxa/rkbin.git;branch=master;"
+SRC_URI = "git://github.com/radxa/rkbin.git;branch=master;protocol=https;"
 SRCREV = "530b61d0e59289d7a24c404faa7617fc87e14495"
 
 S = "${WORKDIR}/git"

@@ -1,0 +1,44 @@
+diff -Naur a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts
+--- a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts	2022-10-25 20:25:27.710258286 +0200
++++ b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts	2022-10-25 20:35:03.018418123 +0200
+@@ -13,17 +13,6 @@
+ 	model = "Radxa CM3 IO";
+ 	compatible = "radxa,radxa-cm3-io", "rockchip,rk3566";
+ 
+-	vcc5v0_usb30: vcc5v0-usb30-regulator {
+-		compatible = "regulator-fixed";
+-		enable-active-high;
+-		gpio = <&gpio3 RK_PC2 GPIO_ACTIVE_HIGH>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&vcc5v0_usb30_en>;
+-		regulator-name = "vcc5v0_usb30";
+-		regulator-always-on;
+-		regulator-boot-on;
+-	};
+-
+ 	vcc_sd: sdmmc-regulator {
+ 		compatible = "regulator-fixed";
+ 		gpio = <&gpio0 RK_PA5 GPIO_ACTIVE_LOW>;
+@@ -128,8 +117,7 @@
+ };
+ 
+ &u2phy0_host {
+-	phy-supply = <&vcc5v0_usb30>;
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &usbhost_dwc3 {
+@@ -156,12 +144,6 @@
+ };
+ 
+ &pinctrl {
+-	usb {
+-		vcc5v0_usb30_en: vcc5v0-host-en {
+-			rockchip,pins = <3 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
+-	};
+-
+ 	leds {
+ 		pi_led: pi-led{
+ 			rockchip,pins = <4 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;

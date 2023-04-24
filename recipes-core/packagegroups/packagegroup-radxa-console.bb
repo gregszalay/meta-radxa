@@ -5,8 +5,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 # contains basic dependencies, that can work without graphics/display
-RDEPENDS_packagegroup-radxa-console = "\
-    alsa-utils-aplay \
+RDEPENDS:packagegroup-radxa-console = "\
     coreutils \
     cpufrequtils \
     gnupg \
@@ -18,12 +17,18 @@ RDEPENDS_packagegroup-radxa-console = "\
     networkmanager \
     networkmanager-nmtui \
     openssh-sftp-server \
-    bluez5 \
     dialog \
     i2c-tools \
-    sudo \
     net-tools \
     findutils \
     mraa-radxa-dev \
     mraa-radxa-utils \
+    util-linux \
+    nano \
+    strace \
+    resize-helper \
+    ntp \
+    kmod \
+    gptfdisk \
+    screen \
     "

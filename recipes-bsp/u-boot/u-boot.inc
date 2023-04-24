@@ -1,5 +1,14 @@
 SUMMARY = "Universal Boot Loader for embedded devices"
+
+#gergely: required for mender
+require recipes-bsp/u-boot/u-boot-mender.inc
+
 PROVIDES = "virtual/bootloader"
+
+#gergely: required for mender
+PROVIDES += "u-boot"
+RPROVIDES_${PN} += "u-boot"
+
 
 B = "${WORKDIR}/build"
 

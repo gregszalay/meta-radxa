@@ -3,7 +3,8 @@ DESCRIPTION = "Resize root filesystem to fit available disk space"
 SECTION = "admin"
 
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+#LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 SRC_URI = " \
 	file://resize-helper.service;name=resize-helper-service \
@@ -22,5 +23,11 @@ do_install() {
 	install -d ${D}${sbindir}
 	install -m 0755 ${WORKDIR}/resize-helper ${D}${sbindir}
 }
+
+FILES:${PN} += "/lib \
+  /lib/systemd \
+  /lib/systemd/system \
+  /lib/systemd/system/resize-helper.service \
+"
 
 SYSTEMD_SERVICE_${PN} = "resize-helper.service"

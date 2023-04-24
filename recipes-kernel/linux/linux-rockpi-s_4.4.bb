@@ -10,7 +10,7 @@ DEPENDS += "openssl-native u-boot-mkimage-radxa-native"
 do_compile[depends] += "u-boot-mkimage-radxa-native:do_populate_sysroot"
 
 SRC_URI = " \
-	git://github.com/radxa/kernel.git;branch=stable-4.4-rockpis; \
+	git://github.com/radxa/kernel.git;branch=stable-4.4-rockpis;protocol=https; \
 	file://0002-Suppress-additional-warnings.patch \
 "
 
@@ -27,18 +27,18 @@ PV = "${LINUX_VERSION}"
 COMPATIBLE_MACHINE = "(rk3036|rk3066|rk3288|rk3328|rk3399|rk3308)"
 deltask kernel_configme
 
-do_compile_append() {
+do_compile:append() {
 	oe_runmake dtbs
 }
 
 # Make sure we use /usr/bin/env ${PYTHON_PN} for scripts
-do_patch_append() {
+do_patch:append() {
 	for s in `grep -rIl python ${S}/scripts`; do
 		sed -i -e '1s|^#!.*python[23]*|#!/usr/bin/env ${PYTHON_PN}|' $s
 	done
 }
 
-do_deploy_append() {
+do_deploy:append() {
 	install -d ${DEPLOYDIR}/overlays
 	install -m 644 ${WORKDIR}/linux-rockpi_s_rk3308-standard-build/arch/arm64/boot/dts/rockchip/overlay/* ${DEPLOYDIR}/overlays
 }

@@ -74,4 +74,4 @@ INSANE_SKIP_${PN} = "file-rdeps ldflags staticdev already-stripped"
 # make modules_prepare. gcc on the build host might not support the
 # -fmacro-prefix-map option which is quite recent and introduced in
 # Yocto since warrior. Remove it for this recipe
-DEBUG_PREFIX_MAP_remove = "-fmacro-prefix-map=${WORKDIR}=/usr/src/debug/${PN}/${EXTENDPE}${PV}-${PR}"
+DEBUG_PREFIX_MAP:remove = "-fmacro-prefix-map=${WORKDIR}=/usr/src/debug/${PN}/${EXTENDPE}${PV}-${PR}"
