@@ -1,0 +1,5 @@
+#!/bin/sh
+
+su -l -c "chromium www.youtube.com" kiosk &
+#x wont run without window manager
+exec matchbox-window-manager

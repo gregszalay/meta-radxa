@@ -1,13 +1,14 @@
 # Create an image that can be written onto a SD card using dd.
-
 inherit image_types
 
 # Use an uncompressed ext4 by default as rootfs
 IMG_ROOTFS_TYPE = "ext4"
-IMG_ROOTFS = "${IMGDEPLOYDIR}/${IMAGE_BASENAME}-${MACHINE}.${IMG_ROOTFS_TYPE}"
+IMG_ROOTFS = "${IMGDEPLOYDIR}/${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.${IMG_ROOTFS_TYPE}"
 
 # This image depends on the rootfs image
-IMAGE_TYPEDEP_rockchip-radxa-gpt-img = "${IMG_ROOTFS_TYPE}"
+IMAGE_TYPEDEP:rockchip-radxa-gpt-img = "${IMG_ROOTFS_TYPE}"
+
+DEPENDS += "u-boot-mkimage-radxa-native u-boot-radxa-cm3-io"
 
 GPTIMG = "${IMAGE_BASENAME}-${MACHINE}-gpt.img"
 BOOT_IMG = "${IMAGE_BASENAME}-${MACHINE}-boot.img"
@@ -24,19 +25,19 @@ TRUST_IMG = "trust.img"
 UBOOT_IMG = "u-boot.img"
 UBOOT_ITB = "u-boot.itb"
 
-GPTIMG_APPEND_px30 = "console=tty1 console=ttyS1,1500000n8 rw \
+GPTIMG_APPEND:px30 = "console=tty1 console=ttyS1,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
-GPTIMG_APPEND_rk3308 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
+GPTIMG_APPEND:rk3308 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
-GPTIMG_APPEND_rk3328 = "console=tty1 console=ttyS2,1500000n8 rw \
+GPTIMG_APPEND:rk3328 = "console=tty1 console=ttyS2,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
-GPTIMG_APPEND_rk3399 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
+GPTIMG_APPEND:rk3399 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
-GPTIMG_APPEND_rk3399pro = "console=tty1 console=ttyS2,1500000n8 rw \
+GPTIMG_APPEND:rk3399pro = "console=tty1 console=ttyS2,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
-GPTIMG_APPEND_rk3566 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
+GPTIMG_APPEND:rk3566 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
-GPTIMG_APPEND_rk3568 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
+GPTIMG_APPEND:rk3568 = "console=tty1 console=ttyFIQ0,1500000n8 rw \
 	root=PARTUUID=b921b045-1d rootfstype=ext4 init=/sbin/init rootwait"
 
 # default partitions [in Sectors]
@@ -61,24 +62,25 @@ do_image_rockchip_radxa_gpt_img[depends] += " \
 	radxa-binary-native:do_populate_sysroot \
 	radxa-binary-loader:do_deploy \
 	virtual/kernel:do_deploy \
-	virtual/bootloader:do_deploy"
+	virtual/bootloader:do_deploy \
+	e2fsprogs-native:do_populate_sysroot"
 
-PER_CHIP_IMG_GENERATION_COMMAND_px30 = "generate_px30_loader_image"
-PER_CHIP_IMG_GENERATION_COMMAND_rk3308 = "generate_rk3308_loader_image"
-PER_CHIP_IMG_GENERATION_COMMAND_rk3328 = "generate_rk3328_loader_image"
-PER_CHIP_IMG_GENERATION_COMMAND_rk3399 = "generate_rk3399_loader_image"
-PER_CHIP_IMG_GENERATION_COMMAND_rk3399pro = "generate_rk3399pro_loader_image"
-PER_CHIP_IMG_GENERATION_COMMAND_rk3566 = "generate_rk3566_loader_image"
-PER_CHIP_IMG_GENERATION_COMMAND_rk3568 = "generate_rk3568_loader_image"
+PER_CHIP_IMG_GENERATION_COMMAND:px30 = "generate_px30_loader_image"
+PER_CHIP_IMG_GENERATION_COMMAND:rk3308 = "generate_rk3308_loader_image"
+PER_CHIP_IMG_GENERATION_COMMAND:rk3328 = "generate_rk3328_loader_image"
+PER_CHIP_IMG_GENERATION_COMMAND:rk3399 = "generate_rk3399_loader_image"
+PER_CHIP_IMG_GENERATION_COMMAND:rk3399pro = "generate_rk3399pro_loader_image"
+PER_CHIP_IMG_GENERATION_COMMAND:rk3566 = "generate_rk3566_loader_image"
+PER_CHIP_IMG_GENERATION_COMMAND:rk3568 = "generate_rk3568_loader_image"
 
-IMAGE_CMD_rockchip-radxa-gpt-img () {
+IMAGE_CMD:rockchip-radxa-gpt-img () {
 	# Change to image directory
 	cd ${DEPLOY_DIR_IMAGE}
 
 	# Remove the existing image
 	rm -f "${GPTIMG}"
 	rm -f "${BOOT_IMG}"
-
+	oe_mkext234fs ext4 ${EXTRA_IMAGECMD}
 	create_rk_image
 
 	${PER_CHIP_IMG_GENERATION_COMMAND}
@@ -90,7 +92,7 @@ IMAGE_CMD_rockchip-radxa-gpt-img () {
 }
 
 create_rk_image () {
-
+	
 	# last dd rootfs will extend gpt image to fit the size,
 	# but this will overrite the backup table of GPT
 	# will cause corruption error for GPT
@@ -191,10 +193,10 @@ EOF
 
 	mmd -i ${WORKDIR}/${BOOT_IMG} ::/extlinux
 	mcopy -i ${WORKDIR}/${BOOT_IMG} -s ${WORKDIR}/extlinux.conf ::/extlinux/
-	if [ -d ${DEPLOY_DIR_IMAGE}/overlays ]; then
-		mmd -i ${WORKDIR}/${BOOT_IMG} ::/overlays
-		mcopy -i ${WORKDIR}/${BOOT_IMG} -s ${DEPLOY_DIR_IMAGE}/overlays/* ::/overlays/
-	fi
+#	if [ -d ${DEPLOY_DIR_IMAGE}/overlays ]; then
+#		mmd -i ${WORKDIR}/${BOOT_IMG} ::/overlays
+#		mcopy -i ${WORKDIR}/${BOOT_IMG} -s ${DEPLOY_DIR_IMAGE}/overlays/* ::/overlays/
+#	fi
 	if [ -e ${DEPLOY_DIR_IMAGE}/hw_intfc.conf ]; then
 		mcopy -i ${WORKDIR}/${BOOT_IMG} -s ${DEPLOY_DIR_IMAGE}/hw_intfc.conf ::/
 	fi
@@ -203,7 +205,7 @@ EOF
 		mcopy -i ${WORKDIR}/${BOOT_IMG} -s ${DEPLOY_DIR_IMAGE}/boot.scr ::/
 		mcopy -i ${WORKDIR}/${BOOT_IMG} -s ${DEPLOY_DIR_IMAGE}/boot.cmd ::/
 	fi
-
+	mcopy -i ${WORKDIR}/${BOOT_IMG} -s ${DEPLOY_DIR_IMAGE}/config ::/
 	# Burn Boot Partition
 	dd if=${WORKDIR}/${BOOT_IMG} of=${GPTIMG} conv=notrunc,fsync seek=${BOOT_START}
 
@@ -224,7 +226,7 @@ generate_px30_loader_image () {
 	# Burn bootloader
 	loaderimage --pack --uboot ${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.bin ${DEPLOY_DIR_IMAGE}/${UBOOT_IMG} 0x200000 --size 1024 1
 
-	${DEPLOY_DIR_IMAGE}/mkimage -n ${SOC_FAMILY} -T rksd -d ${DEPLOY_DIR_IMAGE}/${DDR_BIN} ${DEPLOY_DIR_IMAGE}/${IDBLOADER}
+	${DEPLOY_DIR_IMAGE}/mkimage -n ${SOC_FAMILY} -T rksd -d ${DEPLOY_DIR_IMAGE}/${DDR_BIN} ${DEPLOY_DIR}/${IDBLOADER}
 	cat ${DEPLOY_DIR_IMAGE}/${MINILOADER_BIN} >>${DEPLOY_DIR_IMAGE}/${IDBLOADER}
 	cat >${DEPLOY_DIR_IMAGE}/trust.ini <<EOF
 [VERSION]
@@ -414,7 +416,7 @@ generate_rk3566_loader_image () {
 	BOOT_START=$(expr ${ATF_START} + ${ATF_SIZE})
 	ROOTFS_START=$(expr ${BOOT_START} + ${BOOT_SIZE})
 
-	dd if=${DEPLOY_DIR_IMAGE}/${IDBLOADER} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER1_START}
+	dd if=${DEPLOY_DIR}/${IDBLOADER} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER1_START}
 	dd if=${DEPLOY_DIR_IMAGE}/${UBOOT_ITB} of=${GPTIMG} conv=notrunc,fsync seek=${LOADER2_START}
 }
 

@@ -1,0 +1,31 @@
+From fe8cb2c16fe95f222b60a705bc81f62c65cb8ebb Mon Sep 17 00:00:00 2001
+From: Mirza Krak <mirza.krak@northern.tech>
+Date: Thu, 20 Jun 2019 09:17:36 +0000
+Subject: [PATCH 5/6] configs: rockpro64: add Mender support
+
+Signed-off-by: Mirza Krak <mirza.krak@northern.tech>
+---
+ configs/radxa-cm3-io-rk3566_defconfig  | 2 +-
+ include/config_mender_defines.h    | 2 +-
+ include/configs/rk3568_common.h    | 4 ++++
+ include/configs/rockchip-common.h  | 1 -
+ include/configs/rockpro64_rk3399.h | 2 --
+ 5 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/include/config_mender_defines.h b/include/config_mender_defines.h
+index 7f4032ffae..9e9b91760a 100644
+--- a/include/config_mender_defines.h
++++ b/include/config_mender_defines.h
+@@ -12,7 +12,7 @@
+ #define MENDER_ROOTFS_PART_B_NUMBER 3
+ #define MENDER_ROOTFS_PART_B_NUMBER_HEX 3
+ #define MENDER_UBOOT_STORAGE_INTERFACE "mmc"
+-#define MENDER_UBOOT_STORAGE_DEVICE 0
++#define MENDER_UBOOT_STORAGE_DEVICE 1
+ 
+ /* BB variables. */
+ #define MENDER_STORAGE_DEVICE_BASE "/dev/mmcblk0p"
+
+-- 
+2.11.0
+

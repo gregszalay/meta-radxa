@@ -1,0 +1,52 @@
+diff -Naur a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+--- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-23 21:08:47.176393749 +0200
++++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-24 18:13:55.399736335 +0200
+@@ -2915,7 +2915,7 @@
+ 		dmas = <&dmac0 2>, <&dmac0 3>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&uart1m0_xfer>;
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	uart2: serial@fe660000 {
+@@ -2929,7 +2929,7 @@
+ 		dmas = <&dmac0 4>, <&dmac0 5>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&uart2m0_xfer>;
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	uart3: serial@fe670000 {
+@@ -2943,7 +2943,7 @@
+ 		dmas = <&dmac0 6>, <&dmac0 7>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&uart3m0_xfer>;
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	uart4: serial@fe680000 {
+@@ -2998,8 +2998,8 @@
+ 		reg-io-width = <4>;
+ 		dmas = <&dmac0 14>, <&dmac0 15>;
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&uart7m0_xfer>;
+-		status = "disabled";
++		pinctrl-0 = <&uart7m2_xfer>;
++		status = "okay";
+ 	};
+ 
+ 	uart8: serial@fe6c0000 {
+@@ -3026,8 +3026,8 @@
+ 		reg-io-width = <4>;
+ 		dmas = <&dmac0 18>, <&dmac0 19>;
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&uart9m0_xfer>;
+-		status = "disabled";
++		pinctrl-0 = <&uart9m1_xfer>;
++		status = "okay";
+ 	};
+ 
+ 	pwm4: pwm@fe6e0000 {

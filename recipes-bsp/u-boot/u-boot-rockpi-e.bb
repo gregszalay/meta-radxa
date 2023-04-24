@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://Licenses/README;md5=30503fd321432fc713238f582193b78e"
 include u-boot-rockpi.inc
 
 SRC_URI = " \
-	git://github.com/radxa/u-boot.git;branch=stable-4.4-rockpie; \
+	git://github.com/radxa/u-boot.git;branch=stable-4.4-rockpie;protocol=https; \
 	file://0001-Use-local-command.h-file-instead-of-system-file.patch \
 	file://${MACHINE}/boot.cmd \
 	file://${MACHINE}/uEnv.txt \

@@ -1,0 +1,39 @@
+diff -Naur a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+--- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-14 21:21:35.664372646 +0200
++++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-14 21:26:38.502956936 +0200
+@@ -2846,7 +2846,7 @@
+ 		pinctrl-names = "default", "high_speed";
+ 		pinctrl-0 = <&spi0m0_cs0 &spi0m0_cs1 &spi0m0_pins>;
+ 		pinctrl-1 = <&spi0m0_cs0 &spi0m0_cs1 &spi0m0_pins_hs>;
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	spi1: spi@fe620000 {
+@@ -2862,7 +2862,7 @@
+ 		pinctrl-names = "default", "high_speed";
+ 		pinctrl-0 = <&spi1m0_cs0 &spi1m0_cs1 &spi1m0_pins>;
+ 		pinctrl-1 = <&spi1m0_cs0 &spi1m0_cs1 &spi1m0_pins_hs>;
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	spi2: spi@fe630000 {
+@@ -2878,7 +2878,7 @@
+ 		pinctrl-names = "default", "high_speed";
+ 		pinctrl-0 = <&spi2m0_cs0 &spi2m0_cs1 &spi2m0_pins>;
+ 		pinctrl-1 = <&spi2m0_cs0 &spi2m0_cs1 &spi2m0_pins_hs>;
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	spi3: spi@fe640000 {
+@@ -2894,7 +2894,7 @@
+ 		pinctrl-names = "default", "high_speed";
+ 		pinctrl-0 = <&spi3m0_cs0 &spi3m0_cs1 &spi3m0_pins>;
+ 		pinctrl-1 = <&spi3m0_cs0 &spi3m0_cs1 &spi3m0_pins_hs>;
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	uart1: serial@fe650000 {

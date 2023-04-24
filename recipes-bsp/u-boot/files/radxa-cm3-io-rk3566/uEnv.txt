@@ -1,6 +1,5 @@
 verbosity=7
 fdtfile=rk3566-radxa-cm3-io.dtb
 console=ttyFIQ0
-overlays=rk3568-fiq-debugger-uart2m0 rk3568-disable-npu
 kernelimg=Image
 rootuuid=b921b045-1df0-41c3-af44-4c6f280d3fae

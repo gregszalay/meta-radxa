@@ -1,0 +1,14 @@
+diff -Naur a/include/version.h b/include/version.h
+--- a/include/version.h	2022-09-27 15:01:04.161203046 +0000
++++ b/include/version.h	2022-09-27 15:06:09.533065148 +0000
+@@ -11,8 +11,8 @@
+ extern "C" {
+ #endif
+ 
+-const char* gVERSION;
+-const char* gVERSION_SHORT;
++extern const char* gVERSION;
++extern const char* gVERSION_SHORT;
+ 
+ #ifdef __cplusplus
+ }

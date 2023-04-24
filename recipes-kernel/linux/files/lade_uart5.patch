@@ -1,0 +1,14 @@
+diff -Naur a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+--- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-25 13:58:39.831166238 +0200
++++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-25 13:56:33.404494677 +0200
+@@ -2970,8 +2970,8 @@
+ 		reg-io-width = <4>;
+ 		dmas = <&dmac0 10>, <&dmac0 11>;
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&uart5m0_xfer>;
+-		status = "disabled";
++		pinctrl-0 = <&uart5m1_xfer>;
++		status = "okay";
+ 	};
+ 
+ 	uart6: serial@fe6a0000 {

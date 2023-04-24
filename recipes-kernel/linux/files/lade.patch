@@ -1,0 +1,405 @@
+-diff -Naur a/arch/arm64/boot/dts/rockchip/overlay/Makefile b/arch/arm64/boot/dts/rockchip/overlay/Makefile
+--- a/arch/arm64/boot/dts/rockchip/overlay/Makefile	2022-10-17 20:12:02.570192920 +0200
++++ b/arch/arm64/boot/dts/rockchip/overlay/Makefile	2022-10-17 20:25:31.849424646 +0200
+@@ -1,75 +1,9 @@
+ # SPDX-License-Identifier: GPL-2.0
+-dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
+-	cm3-io-sata.dtbo \
+-	radxa-5inch-touchscreen-on-rock-3a.dtbo \
+-	radxa-5inch-touchscreen-on-rock-3b.dtbo \
+-	radxa-cm3-io-dual-cameras-gc2053.dtbo \
+-	radxa-cm3-io-hd101boe9365-display.dtbo \
+-	radxa-cm3-io-i2c0-hym8563.dtbo \
+-	radxa-cm3-io-radxa-10p1inch-display.dtbo \
+-	radxa-cm3-io-sharp-lq133t1jw01-without-hdmi.dtbo \
+-	rk3568-can1-m0.dtbo \
+-	rk3568-can1-m1.dtbo \
+-	rk3568-disable-gmac1.dtbo \
+-	rk3568-disable-npu.dtbo \
+-	rk3568-fiq-debugger-uart0.dtbo \
+-	rk3568-fiq-debugger-uart2m0.dtbo \
+-	rk3568-fiq-debugger-uart3m0.dtbo \
+-	rk3568-fiq-debugger-uart5m1.dtbo \
+-	rk3568-fiq-debugger-uart7m1.dtbo \
+-	rk3568-fiq-debugger-uart8m1.dtbo \
+-	rk3568-fiq-debugger-uart9m1.dtbo \
+-	rk3568-i2c2-m0.dtbo \
+-	rk3568-i2c3-m0.dtbo \
+-	rk3568-pwm12-m0.dtbo \
+-	rk3568-pwm12-m1.dtbo \
+-	rk3568-pwm13-m0.dtbo \
+-	rk3568-pwm13-m1.dtbo \
+-	rk3568-pwm14-m0.dtbo \
+-	rk3568-pwm14-m1.dtbo \
+-	rk3568-pwm15-m0.dtbo \
+-	rk3568-pwm15-m1.dtbo \
+-	rk3568-pwm0-m0.dtbo \
+-	rk3568-pwm0-m1.dtbo \
+-	rk3568-pwm1-m0.dtbo \
+-	rk3568-pwm1-m1.dtbo \
+-	rk3568-pwm2-m0.dtbo \
+-	rk3568-pwm2-m1.dtbo \
+-	rk3568-pwm8-m0-fan.dtbo \
+-	rk3568-pwm9-m0.dtbo \
+-	rock-3a-sata0.dtbo \
+-	rock-3a-sata1.dtbo \
+-	rock-3a-sata2.dtbo \
+-	rk3568-rock-3b-em05-modem.dtbo \
+-	rk3568-rock-3b-sata2.dtbo \
+-	rk3568-spi3-m0-cs0-spidev.dtbo \
+-	rk3568-spi3-m1-cs0-spidev.dtbo \
+-	rk3568-uart0.dtbo \
+-	rk3568-uart2-m0.dtbo \
+-	rk3568-uart3-m0.dtbo \
+-	rk3568-uart3-m1.dtbo \
+-	rk3568-uart5-m1.dtbo \
+-	rk3568-uart7-m1.dtbo \
+-	rk3568-uart8-m1.dtbo \
+-	rk3568-uart9-m1.dtbo \
+-	rk3568-w1-gpio.dtbo \
+-	rock-3ab-rpi-camera-v1p3-ov5647.dtbo \
+-	rock-3ab-rpi-camera-v2-imx219.dtbo \
+-	rock-3b-disable-hdmicec.dtbo \
+-	rock-3b-hdmi-and-sharp-lq133t1jw01-edp-lcd.dtbo \
+-	rock-3b-radxa-10p1inch-display.dtbo \
+-	rock-3c-ov5647.dtbo \
+-	rock-3c-radxa-5inch-touchscreen.dtbo \
+-	audioinjector-isolated-soundcard.dtbo
+-
+ scr-$(CONFIG_ARCH_ROCKCHIP) += \
+ 	rockchip-fixup.scr
+ 
+-dtbotxt-$(CONFIG_ARCH_ROCKCHIP) += \
+-	README.rockchip-overlays
+-
+-targets += $(dtbo-y) $(scr-y) $(dtbotxt-y)
++targets += $(scr-y)
+ 
+-always			:= $(dtbo-y) $(scr-y) $(dtbotxt-y)
++always			:= $(scr-y)
+ clean-files		:= *.dtbo *.scr
+ 
+diff -Naur a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts
+--- a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts	2022-10-17 20:12:02.582192733 +0200
++++ b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3-io.dts	2022-10-17 21:38:31.432983863 +0200
+@@ -8,37 +8,11 @@
+ /dts-v1/;
+ 
+ #include "rk3566-radxa-rock-3-compute-module.dtsi"
+-#include "radxa-cm3-io-sharp-lq133t1jw01-edp-lcd.dtsi"
+-#include "radxa-cm3-io-radxa-10p1inch-display.dtsi"
+-#include "radxa-cm3-io-mipi-lcd-hd101boe9365.dtsi"
+-#include "rk3566-radxa-cm3-io-cameras.dtsi"
+ 
+ / {
+ 	model = "Radxa CM3 IO";
+ 	compatible = "radxa,radxa-cm3-io", "rockchip,rk3566";
+ 
+-	hdmi_sound: hdmi-sound {
+-		compatible = "simple-audio-card";
+-		simple-audio-card,format = "i2s";
+-		simple-audio-card,mclk-fs = <128>;
+-		simple-audio-card,name = "rockchip,hdmi";
+-
+-		simple-audio-card,cpu {
+-				sound-dai = <&i2s0_8ch>;
+-		};
+-		simple-audio-card,codec {
+-				sound-dai = <&hdmi>;
+-		};
+-	};
+-
+-	rk_headset: rk-headset {
+-		compatible = "rockchip_headset";
+-		headset_gpio = <&gpio4 RK_PC4 GPIO_ACTIVE_LOW>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&hp_det>;
+-		io-channels = <&saradc 2>;    //HP_HOOK引脚
+-	};
+-
+ 	vcc5v0_usb30: vcc5v0-usb30-regulator {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+@@ -90,10 +64,6 @@
+ 	};
+ };
+ 
+-&i2s0_8ch {
+-	status = "okay";
+-};
+-
+ &display_subsystem {
+     status = "okay";
+ };
+@@ -110,23 +80,11 @@
+ 	status = "disabled";
+ };
+ 
+-&hdmi_sound {
+-	status = "okay";
+-};
+-
+ &route_hdmi {
+ 	status = "okay";
+ 	connect = <&vp0_out_hdmi>;
+ };
+ 
+-&rk817_sound {
+-	status = "okay";
+-};
+-
+-&i2s1_8ch {
+-	status = "okay";
+-};
+-
+ &sdmmc0 {
+ 	max-frequency = <150000000>;
+ 	supports-sd;
+@@ -204,12 +162,6 @@
+ 		};
+ 	};
+ 
+-	headphone {
+-		hp_det: hp-det {
+-			rockchip,pins = <4 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>;
+-		};
+-	};
+-
+ 	leds {
+ 		pi_led: pi-led{
+ 			rockchip,pins = <4 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
+@@ -238,17 +190,6 @@
+ 		};
+ 	};
+ 
+-	ch482d {
+-		//pcie2.0 --> sata1
+-		ch482d_en1: ch482d-en1 {
+-			rockchip,pins = <3 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
+-		//usb3.0 --> sata2
+-		ch482d_en2: ch482d-en2 {
+-			rockchip,pins = <3 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
+-	};
+-
+ 	gmac1 {
+ 		gmac1m0_miim: gmac1m0-miim {
+ 			rockchip,pins =
+diff -Naur a/arch/arm64/boot/dts/rockchip/rk3566-radxa-rock-3-compute-module.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-radxa-rock-3-compute-module.dtsi
+--- a/arch/arm64/boot/dts/rockchip/rk3566-radxa-rock-3-compute-module.dtsi	2022-10-17 20:12:10.826064941 +0200
++++ b/arch/arm64/boot/dts/rockchip/rk3566-radxa-rock-3-compute-module.dtsi	2022-10-18 15:02:18.174015069 +0200
+@@ -133,7 +133,7 @@
+ 		BT,reset_gpio    = <&gpio2 RK_PC0 GPIO_ACTIVE_HIGH>;    //BT_REG_ON_H
+ 		BT,wake_gpio     = <&gpio2 RK_PB2 GPIO_ACTIVE_HIGH>;    //HOST_WAKE_BT_H
+ 		BT,wake_host_irq = <&gpio2 RK_PB1 GPIO_ACTIVE_HIGH>;    //BT_WAKE_HOST_H
+-		status = "okay";
++		status = "disabled";
+ 	};
+ 
+ 	gpio_leds: gpio-leds {
+@@ -163,19 +163,19 @@
+ };
+ 
+ &rkcif {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rkcif_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rkisp {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rkisp_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &gpu {
+@@ -497,79 +497,69 @@
+ 			spk-volume = <3>;
+ 			out-l2spk-r2hp;
+ 			//spk-ctl-gpios = <&gpio0 RK_PA6 GPIO_ACTIVE_HIGH>;
+-			status = "okay";
++			status = "disabled";
+ 		};
+ 	};
+ };
+ 
+-&i2s1_8ch {
+-	status = "disabled";
+-	rockchip,clk-trcm = <1>;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&i2s1m0_sclktx
+-		     &i2s1m0_lrcktx
+-		     &i2s1m0_sdi0
+-		     &i2s1m0_sdo0>;
+-};
+-
+ &iep {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &iep_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &jpegd {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &jpegd_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &mpp_srv {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rk_rga {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rkvdec {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rkvdec_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rkvenc {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rkvenc_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &bus_npu {
+ 	bus-supply = <&vdd_logic>;
+ 	pvtm-supply = <&vdd_cpu>;
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rknpu {
+ 	memory-region = <&rknpu_reserved>;
+ 	rknpu-supply = <&vdd_gpu>;
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &rknpu_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &saradc {
+-	status = "okay";
++	status = "disabled";
+ 	vref-supply = <&vcc_1v8>;
+ };
+ 
+@@ -602,6 +592,7 @@
+ 	#size-cells = <0>;
+ 
+ 	brcmf: wifi@1 {
++		status = "disabled";
+ 		compatible = "brcm,bcm4329-fmac";
+ 		reg = <1>;
+ 		interrupt-parent = <&gpio2>;
+@@ -615,7 +606,7 @@
+ &uart1 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&uart1m0_xfer &uart1m0_ctsn>;
++	pinctrl-0 = <&uart1m1_xfer &uart1m1_ctsn>;
+ };
+ 
+ &gmac1 {
+@@ -654,11 +645,11 @@
+ };
+ 
+ &sfc {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &tsadc {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &u2phy0_host {
+@@ -732,29 +723,29 @@
+ };
+ 
+ &vdpu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &vdpu_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &vepu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &vepu_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &vop {
+-	status = "okay";
++	status = "disabled";
+ 	assigned-clocks = <&cru DCLK_VOP0>, <&cru DCLK_VOP1>;
+ 	assigned-clock-parents = <&pmucru PLL_HPLL>, <&cru PLL_VPLL>;
+ };
+ 
+ &vop_mmu {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &reserved_memory {
+diff -Naur a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+--- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-17 20:12:02.582192733 +0200
++++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi	2022-10-17 20:26:48.476225457 +0200
+@@ -2894,7 +2894,14 @@
+ 		pinctrl-names = "default", "high_speed";
+ 		pinctrl-0 = <&spi3m0_cs0 &spi3m0_cs1 &spi3m0_pins>;
+ 		pinctrl-1 = <&spi3m0_cs0 &spi3m0_cs1 &spi3m0_pins_hs>;
+-		status = "disabled";
++                max-freq = <50000000>;
++		status = "okay";
++	        spidev {
++                        compatible = "rockchip,spidev";
++                        status = "okay";
++                        reg = <0>;
++                        spi-max-frequency = <50000000>;
++                };
+ 	};
+ 
+ 	uart1: serial@fe650000 {
